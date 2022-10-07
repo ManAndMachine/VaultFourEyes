@@ -53,12 +53,14 @@ namespace FourEyes
                 //WebServiceCredentials_bugfix cred = new WebServiceCredentials_bugfix(service);
                 using (WebServiceManager mgr = new WebServiceManager(cred))
                 {
-                    long currentUserId = mgr.SecurityService.SecurityHeader.UserId;
+                    long currentUserId = mgr.SecurityService.Session.User.Id;
+                    //long currentUserId = mgr.SecurityService.SecurityHeader.UserId;
                     FileArray[] fileCollection = mgr.DocumentService.GetFilesByMasterIds(e.FileMasterIds);
                     //checks the lifecycle of the first file we are changing the state of.
                     CheckFile(fileCollection[0].Files);
 
-                    LfCycDef[] defs = mgr.DocumentServiceExtensions.GetAllLifeCycleDefinitions();
+                    LfCycDef[] defs = mgr.LifeCycleService.GetAllLifeCycleDefinitions();
+                    //LfCycDef[] defs = mgr.DocumentServiceExtensions.GetAllLifeCycleDefinitions();
                     //LfCycDef releaseProcess = defs.FirstOrDefault(
                     //    n => n.SysName == "Flexible Release Process");
 
